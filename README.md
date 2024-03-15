@@ -39,11 +39,13 @@ Programming Language (version): `Python (3.11.5)`
 ## Setup and Usage
 
 1. Clone the repository to your local machine
+
    ```
    git clone https://github.com/amaliap21/Tucil2_13522010_13522042.git`
    ```
 
 2. Change directory to the `src` folder
+
    ```
    cd src
    ```
@@ -63,7 +65,6 @@ Programming Language (version): `Python (3.11.5)`
 ## Program Structure
 
 ```
-
 .
 └── Tucil2_13522010_13522042
 ├── bin
@@ -74,13 +75,5 @@ Programming Language (version): `Python (3.11.5)`
 │ └── main.py
 ├── test
 └── README.md
-
-```
-
-```
-
-```
-
-```
 
 ```
