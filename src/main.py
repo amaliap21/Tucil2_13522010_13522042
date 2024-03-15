@@ -6,7 +6,10 @@ import numpy as np
 import time
 from BruteForce import bezier_brute_force
 from DivideAndConquer import bezier_divide_and_conquer
+import os
+import shutil
 
+##### ALGORITMA UTAMA #####
 # Opsi Algoritma
 def choose_algorithm():
     response = simpledialog.askstring("Choose Algorithm", "Enter 'BF' for Brute Force or 'DAC' for Divide and Conquer:", parent=root)
@@ -42,9 +45,9 @@ def draw_bezier():
         return
 
     # Waktu Eksekusi dan Tampilkan Hasil
-    execution_time = time.time() - start
+    execution_time = (time.time() - start) * 1000
     algorithm_name = "Brute Force" if alg_choice == 'BF' else "Divide and Conquer"
-    plt.title(f"Bezier Curve ({algorithm_name}) - Execution Time: {execution_time:.2f} seconds")
+    plt.title(f"Bezier Curve ({algorithm_name}) - Execution Time: {execution_time:.7f} milliseconds")
     plt.legend()
     canvas.draw()
 
@@ -74,3 +77,29 @@ btn_add_points = tk.Button(root, text="Add Points", command=add_points)
 btn_add_points.pack(side=tk.LEFT, pady=20, padx=10)
 
 root.mainloop()
+
+
+##### ALGORITMA PEMINDAHAN CACHE #####
+src_pycache = './src/__pycache__'
+dest_bin = './bin'
+
+# Function to move the __pycache__ to bin
+def move_pycache_to_bin():
+    # Check if __pycache__ exists in the src directory
+    if os.path.exists(src_pycache):
+        # Check if bin directory exists, if not create it
+        if not os.path.exists(dest_bin):
+            os.makedirs(dest_bin)
+        
+        # Move each file in the __pycache__ directory
+        for filename in os.listdir(src_pycache):
+            src_file = os.path.join(src_pycache, filename)
+            dest_file = os.path.join(dest_bin, filename)
+            # Move file
+            shutil.move(src_file, dest_file)
+        
+        # Remove the now empty __pycache__ directory
+        os.rmdir(src_pycache)
+
+# Call the function
+move_pycache_to_bin()
