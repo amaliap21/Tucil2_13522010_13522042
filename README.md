@@ -38,11 +38,17 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Setup and Usage
 
-1. Clone the repository to your local machine: `git clone https://github.com/amaliap21/Tucil2_13522010_13522042.git`
+1. Clone the repository to your local machine:
 
-2. Change directory to the `src` folder: `cd src`
+   ```
+   git clone https://github.com/amaliap21/Tucil2_13522010_13522042.git`
+   ```
 
-3. Run the program: `python main.py`
+2. Change directory to the `src` folder:
+   `cd src`
+
+3. Run the program:
+   `python main.py`
 
 ## Team Members
 
@@ -54,14 +60,24 @@ Programming Language (version): `Python (3.11.5)`
 ## Program Structure
 
 ```
+
 .
 └── Tucil2_13522010_13522042
-    ├── bin
-    ├── doc
-    ├── src
-    │   ├── BruteForce.py
-    |   ├── DivideAndConquer.py
-    │   └── main.py
-    ├── test
-    └── README.md
+├── bin
+├── doc
+├── src
+│ ├── BruteForce.py
+| ├── DivideAndConquer.py
+│ └── main.py
+├── test
+└── README.md
+
+```
+
+```
+
+```
+
+```
+
 ```
