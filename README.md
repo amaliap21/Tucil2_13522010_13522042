@@ -1,6 +1,6 @@
 # Bezier Curve with Midpoint Algorithm based on Divide and Conquer (Compared with Brute Force)
 
-> Tugas Kecil 02 IF2211 Strategi Algoritma
+Tugas Kecil 02 IF2211 Strategi Algoritma
 
 ## Table of Contents
 
@@ -22,13 +22,13 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Features
 
-| **No.** |                              **POIN**                              |         **Ya**          | **Tidak** |
-| :-----: | :----------------------------------------------------------------: | :---------------------: | --------- |
-|   1.    |                    Program berhasil dijalankan                     | <ul><li>- [✓] </li><li> |           |
-|   2.    |          Program dapat melakukan visualisasi kurva Bézier          | <ul><li>- [✓] </li><li> |           |
-|   3.    |               Solusi yang diberikan program optimal                | <ul><li>- [✓] </li><li> |           |
-|   4.    |     (Bonus) Program dapat membuat kurva untuk n titik kontrol      | <ul><li>- [✓] </li><li> |           |
-|   5.    | (Bonus) Program dapat melakukan visualisasi proses pembuatan kurva | <ul><li>- [✓] </li><li> |           |
+| **No.** |                              **Poin**                              | **Ya** | **Tidak** |
+| :-----: | :----------------------------------------------------------------: | :----: | --------- |
+|   1.    |                    Program berhasil dijalankan                     |   ✓    |           |
+|   2.    |          Program dapat melakukan visualisasi kurva Bézier          |   ✓    |           |
+|   3.    |               Solusi yang diberikan program optimal                |   ✓    |           |
+|   4.    |     (Bonus) Program dapat membuat kurva untuk n titik kontrol      |   ✓    |           |
+|   5.    | (Bonus) Program dapat melakukan visualisasi proses pembuatan kurva |   ✓    |           |
 
 ## Screenshots
 
@@ -38,14 +38,11 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Setup and Usage
 
-1. Clone the repository to your local machine
-   `$ git clone https://github.com/amaliap21/Tucil2_13522010_13522042.git`
+1. Clone the repository to your local machine: `git clone https://github.com/amaliap21/Tucil2_13522010_13522042.git`
 
-2. Change directory to the `src` folder
-   `$ cd src`
+2. Change directory to the `src` folder: `cd src`
 
-3. Run the program
-   `python main.py`
+3. Run the program: `python main.py`
 
 ## Team Members
 
