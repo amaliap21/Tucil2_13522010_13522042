@@ -32,6 +32,7 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Screenshots
 
+Iteration/tolerance : 1
 ![Example screenshot](./test/Comparison0.png)
 ![Example screenshot](./test/Comparison1.png)
 

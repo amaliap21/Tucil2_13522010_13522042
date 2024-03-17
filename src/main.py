@@ -34,11 +34,14 @@ def draw_bezier():
 
     # Plot Sesuai Algoritma yang Dipilih
     if alg_choice == 'BF':
-        t_values = np.linspace(0, 1, 100)
+        scale_factor = 100
+        num_points = int(tolerance * scale_factor) if tolerance > 0 else 100
+        t_values = np.linspace(0, 1, num_points)
+        
         bezier_points = [bezier_brute_force(control_points, t) for t in t_values]
         execution_time += (time.time() - start) * 1000
 
-        plt.plot(*zip(*bezier_points), marker='o', linestyle='-', label="Bezier Curve\n(Brute Force)")
+        plt.plot(*zip(*bezier_points), marker='o', linestyle='-', color='crimson', label="Bezier Curve\n(Brute Force)")
 
     elif alg_choice == 'DAC':
         if len(control_points) < 3:
@@ -84,8 +87,7 @@ def add_points():
     while (alg_choice != 'BF' and alg_choice != 'DAC'):
         alg_choice = choose_algorithm()
 
-    if (alg_choice) == 'DAC':
-        tolerance = simpledialog.askfloat("Input", "What is the tolerance of distance between points?", parent=root) 
+    tolerance = simpledialog.askfloat("Input", "What is the tolerance of distance between points?", parent=root) 
 
     control_points = []
     num_of_points = simpledialog.askinteger("Input", "How many points?", parent=root)
