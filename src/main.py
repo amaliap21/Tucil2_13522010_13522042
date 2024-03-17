@@ -24,6 +24,7 @@ def draw_bezier():
     global control_points
     global alg_choice
     global execution_time
+    global tolerance
 
     plt.clf()
     plt.plot(*zip(*control_points), marker='o', color='peachpuff', linestyle='-', label="Control Points")
@@ -43,7 +44,7 @@ def draw_bezier():
         if len(control_points) < 3:
             pass
         else:
-            BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer(control_points, 1)
+            BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer(control_points, tolerance)
             execution_time += (time.time() - start) * 1000
             
             for i in range (len(MiddlePoints)):
@@ -74,6 +75,7 @@ def add_points():
     global control_points
     global alg_choice
     global execution_time
+    global tolerance
 
     # Pilih Algoritma
     alg_choice = choose_algorithm()
@@ -81,6 +83,9 @@ def add_points():
     # Validasi Input Algoritma
     while (alg_choice != 'BF' and alg_choice != 'DAC'):
         alg_choice = choose_algorithm()
+
+    if (alg_choice) == 'DAC':
+        tolerance = simpledialog.askfloat("Input", "What is the tolerance of distance between points?", parent=root) 
 
     control_points = []
     num_of_points = simpledialog.askinteger("Input", "How many points?", parent=root)
@@ -113,6 +118,7 @@ widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 control_points = []
 execution_time = 0
+tolerance = 0
 
 btn_add_points = tk.Button(root, text="Add Points", command=add_points)
 btn_add_points.pack(side=tk.LEFT, pady=20, padx=10)
