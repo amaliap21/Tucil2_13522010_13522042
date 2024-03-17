@@ -1,0 +1,2 @@
+Test Case 5: Zigzag (5 points)
+Points: [(0, 0), (2, 2), (4, 0), (6, 2), (8, 0)]

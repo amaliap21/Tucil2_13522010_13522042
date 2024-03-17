@@ -6,10 +6,12 @@ import numpy as np
 import time
 import os
 from BruteForce import bezier_brute_force
-from DivideAndConquer import bezier_divide_and_conquer, bezier_divide_and_conquer2
-from utils import update_num_of_folders, move_pycache_to_bin
+from DivideAndConquer import bezier_divide_and_conquer
+from utils import update_folder_numbers, move_pycache_to_bin
 
-
+# Inisialisasi jumlah folder output
+base_output_path = './test/Output'
+num_of_folders = update_folder_numbers(base_output_path)
 
 ##### ALGORITMA UTAMA #####
 # Opsi Algoritma
@@ -21,9 +23,7 @@ def choose_algorithm():
 def draw_bezier():
     global control_points
     global alg_choice
-
     global execution_time
-
 
     plt.clf()
     plt.plot(*zip(*control_points), marker='o', color='peachpuff', linestyle='-', label="Control Points")
@@ -35,43 +35,35 @@ def draw_bezier():
     if alg_choice == 'BF':
         t_values = np.linspace(0, 1, 100)
         bezier_points = [bezier_brute_force(control_points, t) for t in t_values]
-
         execution_time += (time.time() - start) * 1000
-
 
         plt.plot(*zip(*bezier_points), marker='o', linestyle='-', label="Bezier Curve\n(Brute Force)")
+
     elif alg_choice == 'DAC':
-        # Plot Bezier curve
-        BezierPoints, MiddlePoints = bezier_divide_and_conquer(control_points, 0, 5)
-
-        execution_time += (time.time() - start) * 1000
-
-
-        plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'palegreen', linestyle = 'dotted', label="Pass 1 Middle Points")
-        plt.plot(*zip(*BezierPoints), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Pass 1 Bezier Curve\n(Divide and Conquer)")
-        BezierPoints, MiddlePoints = bezier_divide_and_conquer(BezierPoints, 0, 5)
-        plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'pink', linestyle = 'dashed', label="Pass 2 Middle Points")
-        plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', linestyle = 'solid', label="Pass 2 Bezier Curve\n(Divide and Conquer)")
-
-    elif alg_choice == 'DAC2':
         if len(control_points) < 3:
             pass
         else:
-            BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer2(control_points, 1)
+            BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer(control_points, 1)
             execution_time += (time.time() - start) * 1000
+            
             for i in range (len(MiddlePoints)):
-                plt.plot(*zip(*MiddlePoints[i]), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Middle Points")
+                if (i == len(MiddlePoints) - 1):
+                    plt.plot(*zip(*MiddlePoints[i]), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Mid Points")
+                else:
+                    plt.plot(*zip(*MiddlePoints[i]), marker = 'o', color = 'palegreen', linestyle = 'dashed')
             for i in range (len(MiddlePointsLeft)):
-                plt.plot(*zip(*MiddlePointsLeft[i]), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Middle Points from Left Curve")
+                if (i == len(MiddlePointsLeft) - 1):
+                    plt.plot(*zip(*MiddlePointsLeft[i]), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Mid Points Left Curve")
+                else:
+                    plt.plot(*zip(*MiddlePointsLeft[i]), marker = 'o', color = 'lightblue', linestyle = 'dashed')
             for i in range (len(MiddlePointsRight)):
-                plt.plot(*zip(*MiddlePointsRight[i]), marker = 'o', color = 'pink', linestyle = 'dashed', label="Middle Points from Right Curve")
+                if (i == len(MiddlePointsRight) - 1):
+                    plt.plot(*zip(*MiddlePointsRight[i]), marker = 'o', color = 'pink', linestyle = 'dashed', label="Mid Points Right Curve")
+                else:
+                    plt.plot(*zip(*MiddlePointsRight[i]), marker = 'o', color = 'pink', linestyle = 'dashed')
             plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', label="Bezier Curve\n(Divide and Conquer)")      
-    # else:
-    #     print("Invalid algorithm choice. Please enter 'BF' for Brute Force or 'DAC' for Divide and Conquer.")
-    #     return
 
     # Waktu Eksekusi dan Tampilkan Hasil
-
     algorithm_name = "Brute Force" if alg_choice == 'BF' else "Divide and Conquer"
     plt.title(f"Bezier Curve ({algorithm_name}) - Execution Time: {execution_time:.7f} milliseconds")
     plt.legend()
@@ -81,27 +73,13 @@ def draw_bezier():
 def add_points():
     global control_points
     global alg_choice
-    global num_of_folders
-
     global execution_time
 
-    
-    # num_of_folders sudah up-to-date
-    update_num_of_folders()
-    folder_path = f'./test/Output/{num_of_folders}'
-    
-    # Buat Folder Output
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-    
     # Pilih Algoritma
     alg_choice = choose_algorithm()
 
     # Validasi Input Algoritma
-
-    while (alg_choice != 'BF' and alg_choice != 'DAC' and alg_choice != 'DAC2'):
-
-        simpledialog.askstring("Choose Algorithm", "Enter 'BF' for Brute Force or 'DAC' for Divide and Conquer:", parent=root)
+    while (alg_choice != 'BF' and alg_choice != 'DAC'):
         alg_choice = choose_algorithm()
 
     control_points = []
@@ -112,29 +90,28 @@ def add_points():
             control_points.append((float(x), float(y)))
             draw_bezier()
             
-            # Save the figure
-            if (i != num_of_points - 1):
-                plt.savefig(f'./test/Output/{num_of_folders}/BezierCurve_{alg_choice}({i+1}).png')
+            # Simpan Gambar
+            name_algo = "Brute Force" if alg_choice == 'BF' else "Divide and Conquer"
+            folder_name = f'./test/Output/{name_algo}/{num_of_folders[name_algo]}'
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
+            if i != num_of_points - 1:
+                plt.savefig(f'{folder_name}/BezierCurve ({i+1}).png')
             else:
-                plt.savefig(f'./test/Output/{num_of_folders}/BezierCurve_{alg_choice}(final result).png')
-                num_of_folders += 1
-
+                plt.savefig(f'{folder_name}/BezierCurve (final result).png')
+                num_of_folders[name_algo] += 1
+        # Reset waktu eksekusi
         execution_time = 0
         
-
 # Judul dan Tampilan GUI
 root = tk.Tk()
 root.title("Bezier Curve Drawer")
-
 fig, ax = plt.subplots()
 canvas = FigureCanvasTkAgg(fig, master=root)
 widget = canvas.get_tk_widget()
 widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 control_points = []
-
-
-num_of_folders = len(next(os.walk('./test/Output/'))[1])
 execution_time = 0
 
 btn_add_points = tk.Button(root, text="Add Points", command=add_points)

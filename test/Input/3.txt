@@ -1,0 +1,2 @@
+Test Case 3: U-shape (5 points)
+Points: [(1, 1), (1, 4), (3, 6), (5, 4), (5, 1)]

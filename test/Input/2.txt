@@ -1,0 +1,2 @@
+Test Case 2: Slightly more complex curve (5 points)
+Points: [(0, 0), (1, 2), (2, 3), (3, 2), (4, 0)]

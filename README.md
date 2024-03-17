@@ -67,13 +67,25 @@ Programming Language (version): `Python (3.11.5)`
 ```
 .
 └── Tucil2_13522010_13522042
-├── bin
-├── doc
-├── src
-│ ├── BruteForce.py
-| ├── DivideAndConquer.py
-│ └── main.py
-├── test
-└── README.md
-
+   ├── bin
+   |
+   ├── doc
+   │ └── Tucil2_13522010_13522042.pdf
+   |
+   ├── src
+   │ ├── BruteForce.py
+   | ├── DivideAndConquer.py
+   │ ├── main.py
+   │ └── utils.py
+   |
+   ├── test
+   │ ├── Output
+   │ | ├── Brute Force
+   | | | └── ...
+   │ | └── Divide and Conquer
+   | |   └── ...
+   | |
+   | └── Input
+   |
+   └── README.md
 ```
