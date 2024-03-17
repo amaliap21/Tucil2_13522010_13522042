@@ -32,7 +32,7 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Screenshots
 
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./test/Comparison.png)
 
 <!-- If you have screenshots you'd like to share, include them here. -->
 
@@ -68,6 +68,7 @@ Programming Language (version): `Python (3.11.5)`
 .
 └── Tucil2_13522010_13522042
    ├── bin
+   │ └── ...
    |
    ├── doc
    │ └── Tucil2_13522010_13522042.pdf
@@ -86,6 +87,7 @@ Programming Language (version): `Python (3.11.5)`
    | |   └── ...
    | |
    | └── Input
+   |   └── ...
    |
    └── README.md
 ```
