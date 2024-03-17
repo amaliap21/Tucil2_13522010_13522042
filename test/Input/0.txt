@@ -1,0 +1,2 @@
+Test Case 0: Basic (3 points)
+Points: [(1,1), (5,2), (6,1)]

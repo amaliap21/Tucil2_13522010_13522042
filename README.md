@@ -32,7 +32,8 @@ Programming Language (version): `Python (3.11.5)`
 
 ## Screenshots
 
-![Example screenshot](./test/Comparison.png)
+![Example screenshot](./test/Comparison0.png)
+![Example screenshot](./test/Comparison1.png)
 
 <!-- If you have screenshots you'd like to share, include them here. -->
 
