@@ -38,40 +38,40 @@ def bezier_divide_and_conquer2 (ControlPoints, Tolerance):
         #STEP 1: Calculate first final point
         Results = []
         NewControl, Mids = ToThree(ControlPoints)
-        print("Mids:", Mids)
-        print("NewControl:", NewControl)
+        #print("Mids:", Mids)
+        #print("NewControl:", NewControl)
 
         #STEP 2: Check distance between result points
         LeftDist = CheckDistance(ControlPoints[0], NewControl)
-        print("LeftDist:", LeftDist)
+        #print("LeftDist:", LeftDist)
         RightDist = CheckDistance(NewControl, ControlPoints[-1])
-        print("RightDist:", RightDist)
+        #print("RightDist:", RightDist)
 
         #STEP 3: Recursively divide curve until it's under tolerance
         MidsLeft = []
         MidsRight = []
         if (LeftDist <= Tolerance):
             Results.append(ControlPoints[0])
-            print("CP0 Point:", ControlPoints[0])
-            print("CP0 appended:", Results)
+            #print("CP0 Point:", ControlPoints[0])
+            #print("CP0 appended:", Results)
             Results.append(NewControl)
-            print("NC:", Results)
+            #print("NC:", Results)
         elif (LeftDist > Tolerance):
             Left = DivideCurveLeft(ControlPoints, NewControl, Mids)
-            print("Call recur left with", Left)
+            #print("Call recur left with", Left)
             NewControlsLeft, MidsLeft, MidsLeft2, MidsRight2 = bezier_divide_and_conquer2(Left, Tolerance)
             Results.extend(NewControlsLeft)
 
         if (RightDist <= Tolerance):
             #NewControl already added to Result, dont need to add it again
             Results.append(ControlPoints[-1])
-            print("CP-1:", Results)
+            #print("CP-1:", Results)
         elif (RightDist > Tolerance):
             Right = DivideCurveRight(ControlPoints, NewControl, Mids)
-            print("Call recur right with", Right)
+            #print("Call recur right with", Right)
             NewControlRight, MidsRight, MidsLeft2, MidsRight2 = bezier_divide_and_conquer2(Right, Tolerance)
             Results.extend(NewControlRight)
-        print("Close enough!", ControlPoints, Results)
+        #print("Close enough!", ControlPoints, Results)
         return Results, Mids, MidsLeft, MidsRight
 
 def ToThree (ControlPoints):
@@ -80,11 +80,13 @@ def ToThree (ControlPoints):
         NewControl =  MidPoint(Mids[0], Mids[1])
         return NewControl, [Mids]
     else:
+        #print("ControlPoints:", ControlPoints)
         Mids = []
         TempMid1 = []
         for i in range (len(ControlPoints)-1):
             TempMid1.append(MidPoint(ControlPoints[i], ControlPoints[i+1]))
         Mids.extend([TempMid1])
+        #print(len(TempMid1), "TempMid1:", TempMid1)
         NewControl, TempMid = ToThree(TempMid1)
         Mids.extend(TempMid)
         return NewControl, Mids

@@ -41,11 +41,14 @@ def draw_bezier():
         plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'pink', linestyle = 'dashed', label="Pass 2 Middle Points")
         plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', linestyle = 'solid', label="Pass 2 Bezier Curve\n(Divide and Conquer)")
     elif alg_choice == 'DAC2':
-        BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer2(control_points, 1)
-        plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Middle Points")
-        plt.plot(*zip(*MiddlePointsLeft), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Middle Points from Left Curve")
-        plt.plot(*zip(*MiddlePointsRight), marker = 'o', color = 'pink', linestyle = 'dashed', label="Middle Points from Right Curve")
-        plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', label="Bezier Curve\n(Divide and Conquer)")    
+        if len(control_points) < 3:
+            pass
+        else:
+            BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer2(control_points, 1)
+            plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Middle Points")
+            plt.plot(*zip(*MiddlePointsLeft), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Middle Points from Left Curve")
+            plt.plot(*zip(*MiddlePointsRight), marker = 'o', color = 'pink', linestyle = 'dashed', label="Middle Points from Right Curve")
+            plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', label="Bezier Curve\n(Divide and Conquer)")    
     else:
         print("Invalid algorithm choice. Please enter 'BF' for Brute Force or 'DAC' for Divide and Conquer.")
         return
@@ -75,7 +78,7 @@ def add_points():
     alg_choice = choose_algorithm()
 
     # Validasi Input Algoritma
-    while (alg_choice != 'BF' and alg_choice != 'DAC'):
+    while (alg_choice != 'BF' and alg_choice != 'DAC' and alg_choice != 'DAC2'):
         simpledialog.askstring("Choose Algorithm", "Enter 'BF' for Brute Force or 'DAC' for Divide and Conquer:", parent=root)
         alg_choice = choose_algorithm()
 
@@ -105,6 +108,7 @@ widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 control_points = []
 
+num_of_folders = len(next(os.walk('./test/Output/'))[1])
 btn_add_points = tk.Button(root, text="Add Points", command=add_points)
 btn_add_points.pack(side=tk.LEFT, pady=20, padx=10)
 
