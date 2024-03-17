@@ -30,6 +30,7 @@ def bezier_divide_and_conquer (ControlPoints, iterations, max_iterations):
 
     # else: do nothing
 
+
 #def bezier_divide_and_conquer2 (ControlPoints, Tolerance):
     #pass
     
@@ -108,6 +109,7 @@ def DivideCurveRight (ControlPoints, NewControl, MiddlePoints):
     Right.append(ControlPoints[-1])
     return Right
    
+
 def MidPoint(Point1, Point2):
     return ((Point1[0]+Point2[0]) * 0.5, (Point1[1]+Point2[1]) * 0.5)
 

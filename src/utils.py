@@ -10,7 +10,9 @@ def update_num_of_folders():
         os.makedirs(output_path)
         num_of_folders = 1
     else:
+
         # List existing directories and find the maximum existing folder number
+
         folders = glob.glob(output_path + '*/')
         max_num = 0
         for folder in folders:
@@ -21,6 +23,7 @@ def update_num_of_folders():
 
 
 ##### ALGORITMA PEMINDAHAN CACHE #####
+
 src_pycache = './src/__pycache__'
 dest_bin = './bin'
 
@@ -33,11 +36,14 @@ def move_pycache_to_bin():
             os.makedirs(dest_bin)
         
         # Move each file in the __pycache__ directory
+
         for filename in os.listdir(src_pycache):
             src_file = os.path.join(src_pycache, filename)
             dest_file = os.path.join(dest_bin, filename)
             # Move file
             shutil.move(src_file, dest_file)
         
+
         # Remove the now empty __pycache__ directory
+
         os.rmdir(src_pycache)
