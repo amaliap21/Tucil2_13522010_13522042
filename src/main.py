@@ -4,10 +4,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import os
 from BruteForce import bezier_brute_force
 from DivideAndConquer import bezier_divide_and_conquer, bezier_divide_and_conquer2
-import os
-import shutil
+from utils import update_num_of_folders, move_pycache_to_bin
+
 
 ##### ALGORITMA UTAMA #####
 # Opsi Algoritma
@@ -18,11 +19,10 @@ def choose_algorithm():
 # Gambar Kurva Bezier
 def draw_bezier():
     global control_points
+    global alg_choice
+
     plt.clf()
     plt.plot(*zip(*control_points), marker='o', color='peachpuff', linestyle='-', label="Control Points")
-
-    # Pilih Algoritma
-    alg_choice = choose_algorithm()
 
     # Waktu Mulai
     start = time.time()
@@ -60,13 +60,39 @@ def draw_bezier():
 # Gambar Titik
 def add_points():
     global control_points
+    global alg_choice
+    global num_of_folders
+    
+    # num_of_folders sudah up-to-date
+    update_num_of_folders()
+    folder_path = f'./test/Output/{num_of_folders}'
+    
+    # Buat Folder Output
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    
+    # Pilih Algoritma
+    alg_choice = choose_algorithm()
+
+    # Validasi Input Algoritma
+    while (alg_choice != 'BF' and alg_choice != 'DAC'):
+        simpledialog.askstring("Choose Algorithm", "Enter 'BF' for Brute Force or 'DAC' for Divide and Conquer:", parent=root)
+        alg_choice = choose_algorithm()
+
     control_points = []
     num_of_points = simpledialog.askinteger("Input", "How many points?", parent=root)
     if num_of_points:
-        for _ in range(num_of_points):
+        for i in range(num_of_points):
             x, y = simpledialog.askstring("Input", "Enter point (x,y):", parent=root).split(',')
             control_points.append((float(x), float(y)))
-    draw_bezier()
+            draw_bezier()
+            
+            # Save the figure
+            if (i != num_of_points - 1):
+                plt.savefig(f'./test/Output/{num_of_folders}/BezierCurve_{alg_choice}({i+1}).png')
+            else:
+                plt.savefig(f'./test/Output/{num_of_folders}/BezierCurve_{alg_choice}(final result).png')
+                num_of_folders += 1
 
 # Judul dan Tampilan GUI
 root = tk.Tk()
@@ -84,28 +110,5 @@ btn_add_points.pack(side=tk.LEFT, pady=20, padx=10)
 
 root.mainloop()
 
-
-##### ALGORITMA PEMINDAHAN CACHE #####
-src_pycache = './src/__pycache__'
-dest_bin = './bin'
-
-# Function to move the __pycache__ to bin
-def move_pycache_to_bin():
-    # Check if __pycache__ exists in the src directory
-    if os.path.exists(src_pycache):
-        # Check if bin directory exists, if not create it
-        if not os.path.exists(dest_bin):
-            os.makedirs(dest_bin)
-        
-        # Move each file in the __pycache__ directory
-        for filename in os.listdir(src_pycache):
-            src_file = os.path.join(src_pycache, filename)
-            dest_file = os.path.join(dest_bin, filename)
-            # Move file
-            shutil.move(src_file, dest_file)
-        
-        # Remove the now empty __pycache__ directory
-        os.rmdir(src_pycache)
-
-# Call the function
+# Pindahkan __pycache__ ke bin
 move_pycache_to_bin()
