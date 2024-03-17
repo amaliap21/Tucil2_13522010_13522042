@@ -58,7 +58,8 @@ def bezier_divide_and_conquer2 (ControlPoints, Tolerance):
             #print("NC:", Results)
         elif (LeftDist > Tolerance):
             Left = DivideCurveLeft(ControlPoints, NewControl, Mids)
-            #print("Call recur left with", Left)
+            #print("Call recur left with", Left,"from", ControlPoints)
+            #print("Mids:", Mids)
             NewControlsLeft, MidsLeft, MidsLeft2, MidsRight2 = bezier_divide_and_conquer2(Left, Tolerance)
             Results.extend(NewControlsLeft)
 
@@ -66,9 +67,11 @@ def bezier_divide_and_conquer2 (ControlPoints, Tolerance):
             #NewControl already added to Result, dont need to add it again
             Results.append(ControlPoints[-1])
             #print("CP-1:", Results)
+            pass
         elif (RightDist > Tolerance):
             Right = DivideCurveRight(ControlPoints, NewControl, Mids)
-            #print("Call recur right with", Right)
+            #print("Call recur right with", Right, "from", ControlPoints)
+            #print("Mids:", Mids)
             NewControlRight, MidsRight, MidsLeft2, MidsRight2 = bezier_divide_and_conquer2(Right, Tolerance)
             Results.extend(NewControlRight)
         #print("Close enough!", ControlPoints, Results)
@@ -100,8 +103,8 @@ def DivideCurveLeft (ControlPoints, NewControl, MiddlePoints):
 
 def DivideCurveRight (ControlPoints, NewControl, MiddlePoints):
     Right = [NewControl]
-    for i in range (len(MiddlePoints)):
-        Right.append(MiddlePoints[i][-1])
+    for i in reversed(MiddlePoints):
+        Right.append(i[-1])
     Right.append(ControlPoints[-1])
     return Right
    

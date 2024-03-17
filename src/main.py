@@ -20,6 +20,7 @@ def choose_algorithm():
 def draw_bezier():
     global control_points
     global alg_choice
+    global execution_time
 
     plt.clf()
     plt.plot(*zip(*control_points), marker='o', color='peachpuff', linestyle='-', label="Control Points")
@@ -31,10 +32,14 @@ def draw_bezier():
     if alg_choice == 'BF':
         t_values = np.linspace(0, 1, 100)
         bezier_points = [bezier_brute_force(control_points, t) for t in t_values]
+        execution_time += (time.time() - start) * 1000
+
         plt.plot(*zip(*bezier_points), marker='o', linestyle='-', label="Bezier Curve\n(Brute Force)")
     elif alg_choice == 'DAC':
         # Plot Bezier curve
         BezierPoints, MiddlePoints = bezier_divide_and_conquer(control_points, 0, 5)
+        execution_time += (time.time() - start) * 1000
+
         plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'palegreen', linestyle = 'dotted', label="Pass 1 Middle Points")
         plt.plot(*zip(*BezierPoints), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Pass 1 Bezier Curve\n(Divide and Conquer)")
         BezierPoints, MiddlePoints = bezier_divide_and_conquer(BezierPoints, 0, 5)
@@ -45,16 +50,19 @@ def draw_bezier():
             pass
         else:
             BezierPoints, MiddlePoints, MiddlePointsLeft, MiddlePointsRight = bezier_divide_and_conquer2(control_points, 1)
-            plt.plot(*zip(*MiddlePoints), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Middle Points")
-            plt.plot(*zip(*MiddlePointsLeft), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Middle Points from Left Curve")
-            plt.plot(*zip(*MiddlePointsRight), marker = 'o', color = 'pink', linestyle = 'dashed', label="Middle Points from Right Curve")
-            plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', label="Bezier Curve\n(Divide and Conquer)")    
-    else:
-        print("Invalid algorithm choice. Please enter 'BF' for Brute Force or 'DAC' for Divide and Conquer.")
-        return
+            execution_time += (time.time() - start) * 1000
+            for i in range (len(MiddlePoints)):
+                plt.plot(*zip(*MiddlePoints[i]), marker = 'o', color = 'palegreen', linestyle = 'dashed', label="Middle Points")
+            for i in range (len(MiddlePointsLeft)):
+                plt.plot(*zip(*MiddlePointsLeft[i]), marker = 'o', color = 'lightblue', linestyle = 'dashed', label="Middle Points from Left Curve")
+            for i in range (len(MiddlePointsRight)):
+                plt.plot(*zip(*MiddlePointsRight[i]), marker = 'o', color = 'pink', linestyle = 'dashed', label="Middle Points from Right Curve")
+            plt.plot(*zip(*BezierPoints), marker = 'o', color='crimson', label="Bezier Curve\n(Divide and Conquer)")      
+    # else:
+    #     print("Invalid algorithm choice. Please enter 'BF' for Brute Force or 'DAC' for Divide and Conquer.")
+    #     return
 
     # Waktu Eksekusi dan Tampilkan Hasil
-    execution_time = (time.time() - start) * 1000
     algorithm_name = "Brute Force" if alg_choice == 'BF' else "Divide and Conquer"
     plt.title(f"Bezier Curve ({algorithm_name}) - Execution Time: {execution_time:.7f} milliseconds")
     plt.legend()
@@ -65,6 +73,7 @@ def add_points():
     global control_points
     global alg_choice
     global num_of_folders
+    global execution_time
     
     # num_of_folders sudah up-to-date
     update_num_of_folders()
@@ -96,7 +105,8 @@ def add_points():
             else:
                 plt.savefig(f'./test/Output/{num_of_folders}/BezierCurve_{alg_choice}(final result).png')
                 num_of_folders += 1
-
+        execution_time = 0
+        
 # Judul dan Tampilan GUI
 root = tk.Tk()
 root.title("Bezier Curve Drawer")
@@ -109,6 +119,7 @@ widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 control_points = []
 
 num_of_folders = len(next(os.walk('./test/Output/'))[1])
+execution_time = 0
 btn_add_points = tk.Button(root, text="Add Points", command=add_points)
 btn_add_points.pack(side=tk.LEFT, pady=20, padx=10)
 
