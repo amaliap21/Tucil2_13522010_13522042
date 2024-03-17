@@ -21,7 +21,7 @@ def bezier_divide_and_conquer(ControlPoints, Tolerance):
         if (RightDist <= Tolerance):
             #NewControl already added to Result, dont need to add it again
             Results.append(ControlPoints[-1])
-            pass
+            
         elif (RightDist > Tolerance):
             Right = DivideCurveRight(ControlPoints, NewControl, Mids)
             NewControlRight, MidsRight, MidsLeft2, MidsRight2 = bezier_divide_and_conquer(Right, Tolerance)
